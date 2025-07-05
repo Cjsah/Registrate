@@ -611,10 +611,12 @@ public abstract class AbstractRegistrate<S extends AbstractRegistrate<S>> {
      *            ID of the object, which will be converted to a lang key via {@link Util#makeDescriptionId(String, ResourceLocation)}
      * @param localizedName
      *            (English) translation value
+     * @param args
+     *            (English) translation parameters
      * @return A {@link MutableComponent} representing the translated text
      */
-    public MutableComponent addLang(String type, ResourceLocation id, String localizedName) {
-        return addRawLang(Util.makeDescriptionId(type, id), localizedName);
+    public MutableComponent addLang(String type, ResourceLocation id, String localizedName, Object... args) {
+        return addRawLang(Util.makeDescriptionId(type, id), localizedName, args);
     }
 
     /**
@@ -628,10 +630,12 @@ public abstract class AbstractRegistrate<S extends AbstractRegistrate<S>> {
      *            A suffix which will be appended to the generated key (separated by a dot)
      * @param localizedName
      *            (English) translation value
+     * @param args
+     *            (English) translation parameters
      * @return A {@link MutableComponent} representing the translated text
      */
-    public MutableComponent addLang(String type, ResourceLocation id, String suffix, String localizedName) {
-        return addRawLang(Util.makeDescriptionId(type, id) + "." + suffix, localizedName);
+    public MutableComponent addLang(String type, ResourceLocation id, String suffix, String localizedName, Object... args) {
+        return addRawLang(Util.makeDescriptionId(type, id) + "." + suffix, localizedName, args);
     }
 
     /**
@@ -641,13 +645,15 @@ public abstract class AbstractRegistrate<S extends AbstractRegistrate<S>> {
      *            The translation key
      * @param value
      *            The (English) translation value
+     * @param args
+     *            (English) translation parameters
      * @return A {@link MutableComponent} representing the translated text
      */
-    public MutableComponent addRawLang(String key, String value) {
+    public MutableComponent addRawLang(String key, String value, Object... args) {
         if (doDatagen.get()) {
             extraLang.get().add(Pair.of(key, value));
         }
-        return Component.translatable(key);
+        return Component.translatable(key, args);
     }
 
     @SuppressWarnings("null")
